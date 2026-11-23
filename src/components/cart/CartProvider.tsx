@@ -3,13 +3,13 @@
 import { createContext, useContext, useReducer, type ReactNode } from "react";
 import { cartReducer } from "@/lib/cart/reducer";
 import type { CartItem } from "@/lib/cart/types";
-import type { Product } from "@/lib/types";
+import type { Product, ProductVariant } from "@/lib/types";
 
 type CartContextValue = {
   items: CartItem[];
-  add: (product: Product) => void;
-  remove: (productId: string) => void;
-  decrease: (productId: string) => void;
+  add: (product: Product, variant: ProductVariant) => void;
+  remove: (variantId: string) => void;
+  decrease: (variantId: string) => void;
   clear: () => void;
 };
 
@@ -22,9 +22,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     <CartContext.Provider
       value={{
         items,
-        add: (product) => dispatch({ type: "add", product }),
-        remove: (productId) => dispatch({ type: "remove", productId }),
-        decrease: (productId) => dispatch({ type: "decrease", productId }),
+        add: (product, variant) => dispatch({ type: "add", product, variant }),
+        remove: (variantId) => dispatch({ type: "remove", variantId }),
+        decrease: (variantId) => dispatch({ type: "decrease", variantId }),
         clear: () => dispatch({ type: "clear" }),
       }}
     >
